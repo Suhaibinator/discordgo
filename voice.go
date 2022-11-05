@@ -76,7 +76,8 @@ type VoiceSpeakingUpdateHandler func(vc *VoiceConnection, vs *VoiceSpeakingUpdat
 // Speaking sends a speaking notification to Discord over the voice websocket.
 // This must be sent as true prior to sending audio and should be set to false
 // once finished sending audio.
-//  b  : Send true if speaking, false if not.
+//
+//	b  : Send true if speaking, false if not.
 func (v *VoiceConnection) Speaking(b bool) (err error) {
 
 	v.log(LogDebug, "called (%t)", b)
@@ -437,7 +438,7 @@ func (v *VoiceConnection) onEvent(message []byte) {
 		// Start the opusReceiver
 		if !v.deaf {
 			if v.OpusRecv == nil {
-				v.OpusRecv = make(chan *Packet, 2)
+				v.OpusRecv = make(chan *Packet, 100)
 			}
 
 			go v.opusReceiver(v.udpConn, v.close, v.OpusRecv)
