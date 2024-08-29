@@ -51,9 +51,14 @@ func (umc *unmarshalableMessageComponent) UnmarshalJSON(src []byte) error {
 	case TextInputComponent:
 		umc.MessageComponent = &TextInput{}
 	default:
-		return fmt.Errorf("unknown component type: %d", v.Type)
+		err = fmt.Errorf("unknown component type: %d", v.Type)
 	}
-	return json.Unmarshal(src, umc.MessageComponent)
+
+	unmarshalErr := json.Unmarshal(src, umc.MessageComponent)
+	if unmarshalErr != nil {
+		return unmarshalErr
+	}
+	return err
 }
 
 // MessageComponentFromJSON is a helper function for unmarshaling message components
