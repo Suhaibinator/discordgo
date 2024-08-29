@@ -51,6 +51,7 @@ func (umc *unmarshalableMessageComponent) UnmarshalJSON(src []byte) error {
 	case TextInputComponent:
 		umc.MessageComponent = &TextInput{}
 	default:
+		return nil
 		err = fmt.Errorf("unknown component type: %d", v.Type)
 	}
 
